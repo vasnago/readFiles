@@ -82,7 +82,7 @@ public class FrameReader extends JFrame implements ComponentListener {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.WHITE);
-		frame.setBounds(100, 100, 707, 776);
+		frame.setBounds(100, 100, 707, 750);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setVisible(true);
