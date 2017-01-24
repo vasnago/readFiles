@@ -8,21 +8,23 @@ import java.awt.SystemColor;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.io.File;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
 
 import org.apache.commons.io.FilenameUtils;
-import javax.swing.JTabbedPane;
-import javax.swing.JProgressBar;
-import javax.swing.JCheckBox;
-import javax.swing.JTextField;
 
 /**
  * This Class have the logic to the read and write the files of a path selected
@@ -32,18 +34,21 @@ import javax.swing.JTextField;
  * 
  */
 @SuppressWarnings("serial")
-public class FrameReader extends JPanel {
+public class FrameReader extends JFrame implements ComponentListener {
 
 	private JFrame frame;
 
 	private JLabel lblPathValue;
 	private JLabel lblPathRename;
 	private JLabel lblStatus;
-	private JFileChooser chooser;
+	private JFileChooser chooser = new JFileChooser();
 	private JProgressBar progressBar;
+	private JTabbedPane tabbedPane;
 	private JTextField textPrefix;
 	private JCheckBox chckAuto;
 	private TextArea txtAreaNameFiles;
+	private TextArea textAreaRenameFile;
+	private File directory;
 	private boolean flagAction = false;
 	private boolean flag;
 	private int conn = 0;
@@ -77,14 +82,13 @@ public class FrameReader extends JPanel {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.WHITE);
-		frame.setBounds(100, 100, 431, 512);
+		frame.setBounds(100, 100, 700, 1000);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		String iconfilePath = this.getClass().getResource("selectFolder64.png")
-				.getFile();
+		frame.setVisible(true);
 
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 415, 474);
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBounds(0, 0, 694, 752);
 		frame.getContentPane().add(tabbedPane);
 
 		JPanel panel_1 = new JPanel();
@@ -92,42 +96,40 @@ public class FrameReader extends JPanel {
 		panel_1.setLayout(null);
 
 		txtAreaNameFiles = new TextArea();
-		txtAreaNameFiles.setBounds(0, 97, 410, 349);
+		txtAreaNameFiles.setEditable(false);
+		txtAreaNameFiles.setBounds(0, 97, 689, 627);
 		panel_1.add(txtAreaNameFiles);
 
 		Panel panel = new Panel();
-		panel.setBounds(0, 0, 410, 97);
+		panel.setBounds(0, 0, 689, 97);
 		panel_1.add(panel);
 		panel.setBackground(SystemColor.inactiveCaption);
 		panel.setLayout(null);
 
 		JButton btnSelectFolder = new JButton("");
-		btnSelectFolder.setBounds(10, 11, 65, 53);
+		btnSelectFolder.setIcon(new ImageIcon(FrameReader.class
+				.getResource("/Image/selectFolder64.png")));
+		btnSelectFolder.setBackground(SystemColor.inactiveCaption);
+		btnSelectFolder.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnSelectFolder.setForeground(Color.BLACK);
+		btnSelectFolder.setBounds(20, 20, 65, 55);
 		panel.add(btnSelectFolder);
 		btnSelectFolder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				txtAreaNameFiles.setText("");
 				flagAction = false;
 				selectPath();
 			}
 		});
-		btnSelectFolder.setIcon(new ImageIcon(iconfilePath));
-		btnSelectFolder.setBorder(BorderFactory.createEmptyBorder());
-		btnSelectFolder.setContentAreaFilled(false);
-		btnSelectFolder.setFocusable(false);
-
-		JLabel lblSelectFolder = new JLabel("Select Folder");
-		lblSelectFolder.setBounds(10, 64, 89, 14);
-		panel.add(lblSelectFolder);
-		lblSelectFolder.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
 
 		JLabel lblPath = new JLabel("Path:");
-		lblPath.setBounds(99, 11, 39, 14);
+		lblPath.setBounds(150, 20, 39, 14);
 		panel.add(lblPath);
-		lblPath.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
+		lblPath.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
 
 		lblPathValue = new JLabel("");
-		lblPathValue.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 13));
-		lblPathValue.setBounds(99, 39, 286, 14);
+		lblPathValue.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
+		lblPathValue.setBounds(150, 39, 426, 14);
 		panel.add(lblPathValue);
 		lblPathValue.setBackground(Color.WHITE);
 
@@ -139,37 +141,34 @@ public class FrameReader extends JPanel {
 		Panel panel_3 = new Panel();
 		panel_3.setLayout(null);
 		panel_3.setBackground(SystemColor.inactiveCaption);
-		panel_3.setBounds(0, 0, 410, 145);
+		panel_3.setBounds(0, 0, 689, 174);
 		panel_2.add(panel_3);
 
 		JButton btnRename = new JButton("");
+		btnRename.setIcon(new ImageIcon(FrameReader.class
+				.getResource("/Image/selectFolder64.png")));
+		btnRename.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnRename.setBackground(SystemColor.inactiveCaption);
 		btnRename.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				textAreaRenameFile.setText("");
 				flagAction = true;
 				selectPath();
 			}
 		});
-		btnRename.setIcon(new ImageIcon(iconfilePath));
-		btnRename.setFocusable(false);
-		btnRename.setContentAreaFilled(false);
-		btnRename.setBorder(BorderFactory.createEmptyBorder());
-		btnRename.setBounds(10, 11, 65, 53);
+
+		btnRename.setBounds(20, 20, 65, 55);
 		panel_3.add(btnRename);
 
-		JLabel label = new JLabel("Select Folder");
-		label.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
-		label.setBounds(10, 64, 83, 14);
-		panel_3.add(label);
-
 		JLabel label_1 = new JLabel("Path:");
-		label_1.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
-		label_1.setBounds(99, 11, 39, 14);
+		label_1.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
+		label_1.setBounds(150, 20, 39, 14);
 		panel_3.add(label_1);
 
 		lblPathRename = new JLabel("");
-		lblPathRename.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 13));
+		lblPathRename.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
 		lblPathRename.setBackground(Color.WHITE);
-		lblPathRename.setBounds(99, 39, 286, 14);
+		lblPathRename.setBounds(150, 45, 389, 14);
 		panel_3.add(lblPathRename);
 
 		chckAuto = new JCheckBox("Auto-Increment");
@@ -180,44 +179,59 @@ public class FrameReader extends JPanel {
 			}
 		});
 		chckAuto.setBackground(SystemColor.inactiveCaption);
-		chckAuto.setBounds(10, 85, 117, 23);
+		chckAuto.setBounds(16, 98, 117, 23);
 		panel_3.add(chckAuto);
 
 		textPrefix = new JTextField();
-		textPrefix.setBounds(59, 113, 326, 20);
+		textPrefix.setBounds(89, 130, 590, 31);
 		panel_3.add(textPrefix);
 		textPrefix.setColumns(10);
 
 		JLabel lblNewLabel = new JLabel("Prefix :");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblNewLabel.setBounds(10, 115, 46, 14);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel.setBounds(16, 136, 65, 14);
 		panel_3.add(lblNewLabel);
 
 		lblStatus = new JLabel("");
-		lblStatus.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
-		lblStatus.setBounds(115, 182, 173, 14);
+		lblStatus.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
+		lblStatus.setBounds(209, 180, 246, 14);
 		panel_2.add(lblStatus);
 
 		progressBar = new JProgressBar();
-		progressBar.setBounds(10, 151, 390, 20);
+		progressBar.setBounds(10, 203, 669, 32);
 		progressBar.setValue(0);
 		progressBar.setMinimum(0);
 		progressBar.setStringPainted(true);
 		panel_2.add(progressBar);
-		frame.setIconImage(new ImageIcon(getClass().getResource("icon.png"))
-				.getImage());
+
+		textAreaRenameFile = new TextArea();
+		textAreaRenameFile.setBounds(0, 241, 689, 483);
+		panel_2.add(textAreaRenameFile);
+
+		frame.setIconImage(new ImageIcon(getClass().getResource(
+				"/Image/icon.png")).getImage());
 	}
 
 	/**
 	 * This method allows the user select a folder to search files
 	 */
 	private void selectPath() {
-		chooser = new JFileChooser();
-		chooser.setCurrentDirectory(new java.io.File("."));
+		if (directory != null) {
+			chooser.setCurrentDirectory(directory);
+		} else {
+			chooser.setCurrentDirectory(new java.io.File("."));
+		}
 		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		chooser.setAcceptAllFileFilterUsed(false);
 		if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-			readFilesPath();
+			String path = chooser.getSelectedFile().getPath();
+			int resp = JOptionPane.showConfirmDialog(null,
+					"¿Are Your Sure of the Path?\n" + path, "Confirmation!",
+					JOptionPane.YES_NO_OPTION);
+			if (resp == 0) {
+				readFilesPath();
+				directory = chooser.getCurrentDirectory();
+			}
 		}
 	}
 
@@ -237,6 +251,7 @@ public class FrameReader extends JPanel {
 		int cont = 1;
 		for (int i = 0; i < listOfFiles.length; i++) {
 			if (listOfFiles[i].isFile()) {
+
 				if (flagAction) {
 					renameFile(listOfFiles[i]);
 					int percent = (int) ((cont * 100.0f) / v);
@@ -267,6 +282,7 @@ public class FrameReader extends JPanel {
 	private void renameFile(File file) {
 		String path = chooser.getSelectedFile().getPath();
 		String name = changeName(file.getName());
+		textAreaRenameFile.append(name + "\n");
 		File newfile = new File(path + "/" + name);
 		file.renameTo(newfile);
 	}
@@ -349,5 +365,28 @@ public class FrameReader extends JPanel {
 			count++;
 		}
 		return newvalue;
+	}
+
+	@Override
+	public void componentResized(ComponentEvent paramComponentEvent) {
+
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent paramComponentEvent) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void componentShown(ComponentEvent paramComponentEvent) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void componentHidden(ComponentEvent paramComponentEvent) {
+		// TODO Auto-generated method stub
+
 	}
 }
