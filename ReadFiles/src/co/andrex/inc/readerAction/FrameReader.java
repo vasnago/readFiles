@@ -82,13 +82,13 @@ public class FrameReader extends JFrame implements ComponentListener {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.WHITE);
-		frame.setBounds(100, 100, 700, 1000);
+		frame.setBounds(100, 100, 707, 776);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setVisible(true);
 
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 694, 752);
+		tabbedPane.setBounds(0, 0, 691, 738);
 		frame.getContentPane().add(tabbedPane);
 
 		JPanel panel_1 = new JPanel();
@@ -97,7 +97,7 @@ public class FrameReader extends JFrame implements ComponentListener {
 
 		txtAreaNameFiles = new TextArea();
 		txtAreaNameFiles.setEditable(false);
-		txtAreaNameFiles.setBounds(0, 97, 689, 627);
+		txtAreaNameFiles.setBounds(0, 97, 689, 617);
 		panel_1.add(txtAreaNameFiles);
 
 		Panel panel = new Panel();
@@ -129,7 +129,7 @@ public class FrameReader extends JFrame implements ComponentListener {
 
 		lblPathValue = new JLabel("");
 		lblPathValue.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
-		lblPathValue.setBounds(150, 39, 426, 14);
+		lblPathValue.setBounds(150, 39, 529, 14);
 		panel.add(lblPathValue);
 		lblPathValue.setBackground(Color.WHITE);
 
@@ -168,7 +168,7 @@ public class FrameReader extends JFrame implements ComponentListener {
 		lblPathRename = new JLabel("");
 		lblPathRename.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
 		lblPathRename.setBackground(Color.WHITE);
-		lblPathRename.setBounds(150, 45, 389, 14);
+		lblPathRename.setBounds(150, 45, 529, 14);
 		panel_3.add(lblPathRename);
 
 		chckAuto = new JCheckBox("Auto-Increment");
@@ -205,7 +205,7 @@ public class FrameReader extends JFrame implements ComponentListener {
 		panel_2.add(progressBar);
 
 		textAreaRenameFile = new TextArea();
-		textAreaRenameFile.setBounds(0, 241, 689, 483);
+		textAreaRenameFile.setBounds(0, 241, 689, 473);
 		panel_2.add(textAreaRenameFile);
 
 		frame.setIconImage(new ImageIcon(getClass().getResource(
