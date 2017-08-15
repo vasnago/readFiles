@@ -1,6 +1,7 @@
 package co.andrex.inc.readerAction;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Panel;
@@ -12,6 +13,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.io.File;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -23,6 +25,8 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 import org.apache.commons.io.FilenameUtils;
 
@@ -34,7 +38,7 @@ import org.apache.commons.io.FilenameUtils;
  * 
  */
 @SuppressWarnings("serial")
-public class FrameReader extends JFrame implements ComponentListener {
+public class FrameReader {
 
 	private JFrame frame;
 
@@ -97,11 +101,11 @@ public class FrameReader extends JFrame implements ComponentListener {
 
 		txtAreaNameFiles = new TextArea();
 		txtAreaNameFiles.setEditable(false);
-		txtAreaNameFiles.setBounds(0, 97, 689, 617);
+		txtAreaNameFiles.setBounds(0, 114, 689, 572);
 		panel_1.add(txtAreaNameFiles);
 
 		Panel panel = new Panel();
-		panel.setBounds(0, 0, 689, 97);
+		panel.setBounds(0, 0, 689, 114);
 		panel_1.add(panel);
 		panel.setBackground(SystemColor.inactiveCaption);
 		panel.setLayout(null);
@@ -113,6 +117,9 @@ public class FrameReader extends JFrame implements ComponentListener {
 		btnSelectFolder.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnSelectFolder.setForeground(Color.BLACK);
 		btnSelectFolder.setBounds(20, 20, 65, 55);
+		btnSelectFolder.setBorder(BorderFactory.createEmptyBorder());
+		btnSelectFolder.setContentAreaFilled(false);
+		btnSelectFolder.setFocusable(false);
 		panel.add(btnSelectFolder);
 		btnSelectFolder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -121,15 +128,20 @@ public class FrameReader extends JFrame implements ComponentListener {
 				selectPath();
 			}
 		});
+		
+		JLabel lblSelectFolder = new JLabel("Select Folder");
+		lblSelectFolder.setBounds(20, 86, 137, 14);
+		panel.add(lblSelectFolder);
+		lblSelectFolder.setFont(new Font("Trebuchet MS", Font.BOLD, 20));
 
 		JLabel lblPath = new JLabel("Path:");
-		lblPath.setBounds(150, 20, 39, 14);
+		lblPath.setBounds(150, 20, 90, 24);
 		panel.add(lblPath);
-		lblPath.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
+		lblPath.setFont(new Font("Trebuchet MS", Font.BOLD, 20));
 
 		lblPathValue = new JLabel("");
-		lblPathValue.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
-		lblPathValue.setBounds(150, 39, 529, 14);
+		lblPathValue.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 20));
+		lblPathValue.setBounds(150, 47, 529, 28);
 		panel.add(lblPathValue);
 		lblPathValue.setBackground(Color.WHITE);
 
@@ -141,7 +153,7 @@ public class FrameReader extends JFrame implements ComponentListener {
 		Panel panel_3 = new Panel();
 		panel_3.setLayout(null);
 		panel_3.setBackground(SystemColor.inactiveCaption);
-		panel_3.setBounds(0, 0, 689, 174);
+		panel_3.setBounds(0, 0, 689, 194);
 		panel_2.add(panel_3);
 
 		JButton btnRename = new JButton("");
@@ -149,6 +161,9 @@ public class FrameReader extends JFrame implements ComponentListener {
 				.getResource("/Image/selectFolder64.png")));
 		btnRename.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnRename.setBackground(SystemColor.inactiveCaption);
+		btnRename.setBounds(20, 20, 65, 55);
+		btnRename.setContentAreaFilled(false);
+		btnRename.setBorder(BorderFactory.createEmptyBorder());
 		btnRename.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				textAreaRenameFile.setText("");
@@ -156,22 +171,26 @@ public class FrameReader extends JFrame implements ComponentListener {
 				selectPath();
 			}
 		});
-
-		btnRename.setBounds(20, 20, 65, 55);
 		panel_3.add(btnRename);
+		
+		JLabel label = new JLabel("Select Folder");
+		label.setFont(new Font("Trebuchet MS", Font.BOLD, 20));
+		label.setBounds(20, 77, 131, 14);
+		panel_3.add(label);
 
 		JLabel label_1 = new JLabel("Path:");
-		label_1.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
-		label_1.setBounds(150, 20, 39, 14);
+		label_1.setFont(new Font("Trebuchet MS", Font.BOLD, 20));
+		label_1.setBounds(150, 20, 83, 23);
 		panel_3.add(label_1);
 
 		lblPathRename = new JLabel("");
-		lblPathRename.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
+		lblPathRename.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 20));
 		lblPathRename.setBackground(Color.WHITE);
-		lblPathRename.setBounds(150, 45, 529, 14);
+		lblPathRename.setBounds(150, 45, 529, 30);
 		panel_3.add(lblPathRename);
 
 		chckAuto = new JCheckBox("Auto-Increment");
+		chckAuto.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		chckAuto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				flag = chckAuto.isSelected();
@@ -179,33 +198,34 @@ public class FrameReader extends JFrame implements ComponentListener {
 			}
 		});
 		chckAuto.setBackground(SystemColor.inactiveCaption);
-		chckAuto.setBounds(16, 98, 117, 23);
+		chckAuto.setBounds(20, 125, 170, 23);
 		panel_3.add(chckAuto);
 
 		textPrefix = new JTextField();
-		textPrefix.setBounds(89, 130, 590, 31);
+		textPrefix.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		textPrefix.setBounds(94, 155, 585, 31);
 		panel_3.add(textPrefix);
 		textPrefix.setColumns(10);
 
 		JLabel lblNewLabel = new JLabel("Prefix :");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel.setBounds(16, 136, 65, 14);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNewLabel.setBounds(16, 158, 73, 25);
 		panel_3.add(lblNewLabel);
 
 		lblStatus = new JLabel("");
-		lblStatus.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
-		lblStatus.setBounds(209, 180, 246, 14);
+		lblStatus.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
+		lblStatus.setBounds(209, 200, 267, 22);
 		panel_2.add(lblStatus);
 
 		progressBar = new JProgressBar();
-		progressBar.setBounds(10, 203, 669, 32);
+		progressBar.setBounds(10, 233, 669, 32);
 		progressBar.setValue(0);
 		progressBar.setMinimum(0);
 		progressBar.setStringPainted(true);
 		panel_2.add(progressBar);
 
 		textAreaRenameFile = new TextArea();
-		textAreaRenameFile.setBounds(0, 241, 689, 473);
+		textAreaRenameFile.setBounds(0, 271, 689, 413);
 		panel_2.add(textAreaRenameFile);
 
 		frame.setIconImage(new ImageIcon(getClass().getResource(
@@ -216,17 +236,24 @@ public class FrameReader extends JFrame implements ComponentListener {
 	 * This method allows the user select a folder to search files
 	 */
 	private void selectPath() {
+		chooser.setPreferredSize(new Dimension(800, 600));
+		Font font = new Font("Verdana", Font.PLAIN, 26);
+		UIManager.put("FileChooser.listFont",
+				new javax.swing.plaf.FontUIResource(font));
+		SwingUtilities.updateComponentTreeUI(chooser);
 		if (directory != null) {
 			chooser.setCurrentDirectory(directory);
 		} else {
-			chooser.setCurrentDirectory(new java.io.File("."));
+			String user = System.getProperty("user.name");
+			String path = "C:/Users/" + user + "/Downloads";
+			chooser.setCurrentDirectory(new java.io.File(path));
 		}
 		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		chooser.setAcceptAllFileFilterUsed(false);
-		if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+		if (chooser.showOpenDialog(this.frame) == JFileChooser.APPROVE_OPTION) {
 			String path = chooser.getSelectedFile().getPath();
 			int resp = JOptionPane.showConfirmDialog(null,
-					"¿Are Your Sure of the Path?\n" + path, "Confirmation!",
+					"Are Your Sure of the Path?\n" + path, "Confirmation!",
 					JOptionPane.YES_NO_OPTION);
 			if (resp == 0) {
 				readFilesPath();
@@ -365,28 +392,5 @@ public class FrameReader extends JFrame implements ComponentListener {
 			count++;
 		}
 		return newvalue;
-	}
-
-	@Override
-	public void componentResized(ComponentEvent paramComponentEvent) {
-
-	}
-
-	@Override
-	public void componentMoved(ComponentEvent paramComponentEvent) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void componentShown(ComponentEvent paramComponentEvent) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void componentHidden(ComponentEvent paramComponentEvent) {
-		// TODO Auto-generated method stub
-
 	}
 }
