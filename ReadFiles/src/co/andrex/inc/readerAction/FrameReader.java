@@ -97,11 +97,18 @@ public class FrameReader {
 
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Search Files", null, panel_1, null);
+		
+		//Settear el alto y ancho del tab
+		JLabel lab = new JLabel();
+		lab.setText("Search Files");
+		lab.setFont(new Font("Trebuchet MS", Font.BOLD, 20));
+		lab.setPreferredSize(new Dimension(150, 40));
+		tabbedPane.setTabComponentAt(0, lab);
 		panel_1.setLayout(null);
 
 		txtAreaNameFiles = new TextArea();
 		txtAreaNameFiles.setEditable(false);
-		txtAreaNameFiles.setBounds(0, 114, 689, 572);
+		txtAreaNameFiles.setBounds(0, 114, 689, 571);
 		panel_1.add(txtAreaNameFiles);
 
 		Panel panel = new Panel();
@@ -146,14 +153,18 @@ public class FrameReader {
 		lblPathValue.setBackground(Color.WHITE);
 
 		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(Color.WHITE);
 		tabbedPane.addTab("Rename Files", null, panel_2, null);
+		JLabel lab2 = new JLabel();
+		lab2.setText("Rename Files");
+		lab2.setPreferredSize(new Dimension(150, 40));
+		lab2.setFont(new Font("Trebuchet MS", Font.BOLD, 20));
+		tabbedPane.setTabComponentAt(1, lab2);
 		panel_2.setLayout(null);
 
 		Panel panel_3 = new Panel();
 		panel_3.setLayout(null);
 		panel_3.setBackground(SystemColor.inactiveCaption);
-		panel_3.setBounds(0, 0, 689, 194);
+		panel_3.setBounds(0, -2, 689, 196);
 		panel_2.add(panel_3);
 
 		JButton btnRename = new JButton("");
@@ -175,7 +186,7 @@ public class FrameReader {
 		
 		JLabel label = new JLabel("Select Folder");
 		label.setFont(new Font("Trebuchet MS", Font.BOLD, 20));
-		label.setBounds(20, 77, 131, 14);
+		label.setBounds(20, 87, 131, 14);
 		panel_3.add(label);
 
 		JLabel label_1 = new JLabel("Path:");
@@ -225,7 +236,7 @@ public class FrameReader {
 		panel_2.add(progressBar);
 
 		textAreaRenameFile = new TextArea();
-		textAreaRenameFile.setBounds(0, 271, 689, 413);
+		textAreaRenameFile.setBounds(0, 271, 689, 395);
 		panel_2.add(textAreaRenameFile);
 
 		frame.setIconImage(new ImageIcon(getClass().getResource(
