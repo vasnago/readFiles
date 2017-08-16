@@ -89,7 +89,7 @@ public class FrameReader {
 		frame.setTitle("FilerX Reader V.2.1");
 		frame.setResizable(false);
 		frame.getContentPane().setBackground(Color.WHITE);
-		frame.setBounds(100, 100, 731, 740);
+		frame.setBounds(100, 100, 731, 770);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setVisible(true);
