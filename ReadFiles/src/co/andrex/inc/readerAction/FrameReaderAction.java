@@ -10,6 +10,7 @@ import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.Serializable;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -35,7 +36,8 @@ import org.apache.commons.io.FilenameUtils;
  * @author Andrex.Gomez
  * 
  */
-public class FrameReader {
+@SuppressWarnings("serial")
+public class FrameReaderAction implements Serializable {
 
 	private JFrame frame;
 
@@ -57,6 +59,7 @@ public class FrameReader {
 	private boolean isIncrement;
 	private boolean isIncrementWithoutName;
 	private int conn = 0;
+	private JButton btnClearRaname;
 
 	/**
 	 * Launch the application.
@@ -65,7 +68,7 @@ public class FrameReader {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FrameReader window = new FrameReader();
+					FrameReaderAction window = new FrameReaderAction();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -77,7 +80,7 @@ public class FrameReader {
 	/**
 	 * Create the application.
 	 */
-	public FrameReader() {
+	public FrameReaderAction() {
 		initialize();
 	}
 
@@ -85,6 +88,7 @@ public class FrameReader {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		// Create the principal frame
 		frame = new JFrame();
 		frame.setTitle("FilerX Reader V.2.1");
 		frame.setResizable(false);
@@ -120,17 +124,10 @@ public class FrameReader {
 		panel.setBackground(SystemColor.inactiveCaption);
 		panel.setLayout(null);
 
+		// Create Button of Select Folder Search Files
 		JButton btnSelectFolder = new JButton("");
-		btnSelectFolder.setIcon(new ImageIcon(FrameReader.class
-				.getResource("/Image/selectFolder64.png")));
-		btnSelectFolder.setBackground(SystemColor.inactiveCaption);
-		btnSelectFolder.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnSelectFolder.setForeground(Color.BLACK);
-		btnSelectFolder.setBounds(34, 20, 65, 55);
-		btnSelectFolder.setBorder(BorderFactory.createEmptyBorder());
-		btnSelectFolder.setContentAreaFilled(false);
-		btnSelectFolder.setFocusable(false);
-		panel.add(btnSelectFolder);
+		setButtonOption(btnSelectFolder, "/Image/selectFolder64.png", false,
+				34, 20, 65, 55);
 		btnSelectFolder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				txtAreaNameFiles.setText("");
@@ -139,6 +136,7 @@ public class FrameReader {
 				buttonRunSearchFile.setEnabled(directory != null);
 			}
 		});
+		panel.add(btnSelectFolder);
 
 		JLabel lblSelectFolder = new JLabel("Select Folder");
 		lblSelectFolder.setBounds(5, 78, 137, 14);
@@ -156,23 +154,27 @@ public class FrameReader {
 		panel.add(lblPathValue);
 		lblPathValue.setBackground(Color.WHITE);
 
+		// Create Button to run the search files
 		buttonRunSearchFile = new JButton("");
-		buttonRunSearchFile.setBackground(SystemColor.inactiveCaption);
-		buttonRunSearchFile.setIcon(new ImageIcon(FrameReader.class
-				.getResource("/Image/runIconX72.png")));
-		buttonRunSearchFile.setBounds(322, 86, 72, 72);
-		buttonRunSearchFile.setFont(new Font("Tahoma", Font.BOLD, 14));
-		buttonRunSearchFile.setForeground(Color.BLACK);
-		buttonRunSearchFile.setBorder(BorderFactory.createEmptyBorder());
-		buttonRunSearchFile.setContentAreaFilled(false);
-		buttonRunSearchFile.setFocusable(false);
-		buttonRunSearchFile.setEnabled(directory != null);
+		setButtonOption(buttonRunSearchFile, "/Image/runIconX72.png", true,
+				322, 86, 72, 72);
 		buttonRunSearchFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				readFilesPath();
 			}
 		});
 		panel.add(buttonRunSearchFile);
+
+		// Create Button to clean the textArea in Search tab
+		JButton btnClearSearch = new JButton("");
+		setButtonOption(btnClearSearch, "/Image/Clear_32.png", false, 10, 126,
+				32, 32);
+		btnClearSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtAreaNameFiles.setText("");
+			}
+		});
+		panel.add(btnClearSearch);
 
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab("Rename Files", null, panel_2, null);
@@ -189,14 +191,10 @@ public class FrameReader {
 		panel_3.setBounds(0, 0, 720, 246);
 		panel_2.add(panel_3);
 
+		// Create Button to select folder to rename tab
 		JButton btnRename = new JButton("");
-		btnRename.setIcon(new ImageIcon(FrameReader.class
-				.getResource("/Image/selectFolder64.png")));
-		btnRename.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnRename.setBackground(SystemColor.inactiveCaption);
-		btnRename.setBounds(34, 20, 65, 55);
-		btnRename.setContentAreaFilled(false);
-		btnRename.setBorder(BorderFactory.createEmptyBorder());
+		setButtonOption(btnRename, "/Image/selectFolder64.png", false, 34, 20,
+				65, 55);
 		btnRename.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				textAreaRenameFile.setText("");
@@ -267,20 +265,24 @@ public class FrameReader {
 		panel_3.add(chckbxAutoincrementWithoutName);
 
 		buttonRunRenameFiles = new JButton("");
-		buttonRunRenameFiles.setIcon(new ImageIcon(FrameReader.class
-				.getResource("/Image/runIconX72.png")));
-		buttonRunRenameFiles.setBounds(322, 170, 72, 72);
-		buttonRunRenameFiles.setBackground(SystemColor.inactiveCaption);
-		buttonRunRenameFiles.setBorder(BorderFactory.createEmptyBorder());
-		buttonRunRenameFiles.setContentAreaFilled(false);
-		buttonRunRenameFiles.setFocusable(false);
-		buttonRunRenameFiles.setEnabled(directory != null);
+		setButtonOption(buttonRunRenameFiles, "/Image/runIconX72.png", true,
+				322, 170, 72, 72);
 		buttonRunRenameFiles.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				readFilesPath();
 			}
 		});
 		panel_3.add(buttonRunRenameFiles);
+
+		btnClearRaname = new JButton("");
+		setButtonOption(btnClearRaname, "/Image/Clear_32.png", false, 10, 205,
+				32, 32);
+		btnClearRaname.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textAreaRenameFile.setText("");
+			}
+		});
+		panel_3.add(btnClearRaname);
 
 		lblStatus = new JLabel("");
 		lblStatus.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
@@ -469,4 +471,27 @@ public class FrameReader {
 		}
 		return newvalue;
 	}
+
+	/**
+	 * This Method allows set the option to custom the button
+	 * 
+	 */
+	public void setButtonOption(JButton jButton, String pathIcon,
+			boolean eneable, int x, int y, int width, int height) {
+		if (jButton != null) {
+			if (pathIcon != null) {
+				jButton.setIcon(new ImageIcon(FrameReaderAction.class
+						.getResource(pathIcon)));
+			}
+			jButton.setBounds(x, y, width, height);
+			jButton.setBackground(SystemColor.inactiveCaption);
+			jButton.setBorder(BorderFactory.createEmptyBorder());
+			jButton.setContentAreaFilled(false);
+			jButton.setFocusable(false);
+			if (eneable) {
+				jButton.setEnabled(directory != null);
+			}
+		}
+	}
+
 }
