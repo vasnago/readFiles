@@ -398,9 +398,10 @@ public class FrameReaderAction implements Serializable {
 	private String changeName(String name) {
 		String value = "";
 		conn++;
-		// Quitamos la extension
+		// Removed the extension
 		String ext = FilenameUtils.getExtension(name);
 		name = name.replaceAll("." + ext, "");
+
 		if (isIncrement) {
 			value = name + "." + conn + "." + ext;
 		} else if (isIncrementWithoutName) {
@@ -437,17 +438,17 @@ public class FrameReaderAction implements Serializable {
 	 * @return String: value fixed of name of the
 	 */
 	private String changeFileName(String path) {
-		// 1. Primero quitamos la extension
+		// 1. Removed the extension
 		String name = FilenameUtils.getExtension(path);
 		String value = path.replaceAll("." + name, "");
 
-		// 2. Despues remplazamos los puntos (.) por espacios en blanco
+		// 2. Then replace the dots (.) With spaces
 		value = value.replaceAll("\\.", " ");
 		value = value.replaceAll("_", " ");
 		value = value.replaceAll("-", " ");
 
-		// 3. Despues se llama el metodo que detecta la mayusculas y separa el
-		// nombre.
+		// 3. Then it is called the method that detects the capital letters and
+		// separates the name
 		String x = value;
 		String filename = "";
 		String newvalue = x;
@@ -475,6 +476,20 @@ public class FrameReaderAction implements Serializable {
 	/**
 	 * This Method allows set the option to custom the button
 	 * 
+	 * @param jButton
+	 *            :Button object to set the parameters
+	 * @param pathIcon
+	 *            :Path to set the icon of the button
+	 * @param eneable
+	 *            :Set a default condition
+	 * @param x
+	 *            :x-coordinate of this component
+	 * @param y
+	 *            :y-coordinate of this component
+	 * @param width
+	 *            :width of this component
+	 * @param height
+	 *            :height of this component
 	 */
 	public void setButtonOption(JButton jButton, String pathIcon,
 			boolean eneable, int x, int y, int width, int height) {
