@@ -280,7 +280,6 @@ public class FrameReader {
 				readFilesPath();
 			}
 		});
-
 		panel_3.add(buttonRunRenameFiles);
 
 		lblStatus = new JLabel("");
@@ -328,7 +327,7 @@ public class FrameReader {
 					"<html>Are Your Sure of the Path?<br><br>" + path
 							+ "<br></html> ");
 			label.setFont(new Font("Arial", Font.BOLD, 20));
-			int resp = JOptionPane.showConfirmDialog(null, label,
+			int resp = JOptionPane.showConfirmDialog(frame, label,
 					"Confirmation!", JOptionPane.YES_NO_OPTION);
 			if (resp == 0) {
 				directory = chooser.getCurrentDirectory();
@@ -349,7 +348,6 @@ public class FrameReader {
 		File[] listOfFiles = folder.listFiles();
 		conn = 0;
 		int v = 0;
-
 		for (int i = 0; i < listOfFiles.length; i++) {
 			if (listOfFiles[i].isFile()) {
 				v++;
