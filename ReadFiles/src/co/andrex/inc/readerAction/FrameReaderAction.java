@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.Panel;
 import java.awt.SystemColor;
 import java.awt.TextArea;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -88,6 +89,15 @@ public class FrameReaderAction implements Serializable {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		// Detected the resolution of display
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		Double width = screenSize.getWidth();
+		Double height = screenSize.getHeight();
+		System.out.println("width: " + width.intValue() + " height: "
+				+ height.intValue());
+		if (width > 2000) {
+
+		}
 		// Create the principal frame
 		frame = new JFrame();
 		frame.setTitle("FilerX Reader V.2.1");
@@ -105,7 +115,7 @@ public class FrameReaderAction implements Serializable {
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Search Files", null, panel_1, null);
 
-		// Settear el alto y ancho del tab
+		// Set the width and height of tab
 		JLabel lab = new JLabel();
 		lab.setText("Search Files");
 		lab.setFont(new Font("Trebuchet MS", Font.BOLD, 20));
