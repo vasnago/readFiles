@@ -129,7 +129,7 @@ public class FrameReaderAction implements Serializable {
 		txtAreaNameFiles = new TextArea();
 		txtAreaNameFiles.setFont(new Font("Tahoma", Font.PLAIN, dis ? 40 : 20));
 		txtAreaNameFiles.setEditable(false);
-		txtAreaNameFiles.setBounds(0, dis ? 330 : 165, dis ? 330 : 721,
+		txtAreaNameFiles.setBounds(0, dis ? 330 : 165, dis ? 1442 : 721,
 				dis ? 990 : 495);
 		panel_1.add(txtAreaNameFiles);
 
