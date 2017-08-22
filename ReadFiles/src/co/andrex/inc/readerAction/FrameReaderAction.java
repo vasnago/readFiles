@@ -106,7 +106,7 @@ public class FrameReaderAction implements Serializable {
 		frame.setResizable(false);
 		frame.getContentPane().setBackground(Color.WHITE);
 
-		frame.setBounds(100, 100, (dis ? 1462 : 731), (dis ? 1495 : 770));
+		frame.setBounds(100, 100, (dis ? 1462 : 731), (dis ? 1495 : 740));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setVisible(true);
