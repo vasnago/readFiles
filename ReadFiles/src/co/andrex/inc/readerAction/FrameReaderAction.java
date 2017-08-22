@@ -342,8 +342,9 @@ public class FrameReaderAction implements Serializable {
 	 * This method allows the user select a folder to search files
 	 */
 	private void selectPath() {
-		chooser.setPreferredSize(new Dimension(800, 600));
-		Font font = new Font("Verdana", Font.PLAIN, 26);
+		chooser.setPreferredSize(new Dimension(dis ? 1000 : 600, dis ? 800
+				: 400));
+		Font font = new Font("Verdana", Font.PLAIN, dis ? 52 : 26);
 		UIManager.put("FileChooser.listFont",
 				new javax.swing.plaf.FontUIResource(font));
 		SwingUtilities.updateComponentTreeUI(chooser);
@@ -361,7 +362,7 @@ public class FrameReaderAction implements Serializable {
 			JLabel label = new JLabel(
 					"<html>Are Your Sure of the Path?<br><br>" + path
 							+ "<br></html> ");
-			label.setFont(new Font("Arial", Font.BOLD, 20));
+			label.setFont(new Font("Arial", Font.BOLD, dis ? 40 : 20));
 			int resp = JOptionPane.showConfirmDialog(frame, label,
 					"Confirmation!", JOptionPane.YES_NO_OPTION);
 			if (resp == 0) {
