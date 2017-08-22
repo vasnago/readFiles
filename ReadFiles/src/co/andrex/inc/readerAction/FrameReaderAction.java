@@ -134,7 +134,7 @@ public class FrameReaderAction implements Serializable {
 		panel_1.add(txtAreaNameFiles);
 
 		Panel panel = new Panel();
-		panel.setBounds(0, 0, dis ? 330 : 721, dis ? 332 : 166);
+		panel.setBounds(0, 0, dis ? 1442 : 721, dis ? 332 : 166);
 		panel_1.add(panel);
 		panel.setBackground(SystemColor.inactiveCaption);
 		panel.setLayout(null);
