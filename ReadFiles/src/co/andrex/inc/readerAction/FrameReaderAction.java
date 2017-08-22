@@ -96,8 +96,6 @@ public class FrameReaderAction implements Serializable {
 		Double height = screenSize.getHeight();
 		dis = false;
 		if (width > 2000) {
-			System.out.println("width: " + width.intValue() + " height: "
-					+ height.intValue());
 			dis = true;
 		}
 		// Create the principal frame
