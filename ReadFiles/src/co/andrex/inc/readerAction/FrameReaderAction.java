@@ -106,15 +106,13 @@ public class FrameReaderAction implements Serializable {
 		frame.setResizable(false);
 		frame.getContentPane().setBackground(Color.WHITE);
 
-		frame.setBounds(100, 100, (dis ? 731 * 2 : 731), (dis ? 770 * 2 - 45
-				: 770));
+		frame.setBounds(100, 100, (dis ? 1462 : 731), (dis ? 1495 : 770));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setVisible(true);
 
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane
-				.setBounds(0, 0, (dis ? 726 * 2 : 726), (dis ? 711 * 2 : 711));
+		tabbedPane.setBounds(0, 0, (dis ? 1452 : 726), (dis ? 1422 : 711));
 		frame.getContentPane().add(tabbedPane);
 
 		JPanel panel_1 = new JPanel();
@@ -123,22 +121,20 @@ public class FrameReaderAction implements Serializable {
 		// Set the width and height of tab
 		JLabel lab = new JLabel();
 		lab.setText("Search Files");
-		lab.setFont(new Font("Trebuchet MS", Font.BOLD, dis ? 20 * 2 : 20));
-		lab.setPreferredSize(new Dimension(dis ? 150 * 2 : 150, dis ? 40 * 2
-				: 40));
+		lab.setFont(new Font("Trebuchet MS", Font.BOLD, dis ? 40 : 20));
+		lab.setPreferredSize(new Dimension(dis ? 300 : 150, dis ? 80 : 40));
 		tabbedPane.setTabComponentAt(0, lab);
 		panel_1.setLayout(null);
 
 		txtAreaNameFiles = new TextArea();
-		txtAreaNameFiles.setFont(new Font("Tahoma", Font.PLAIN, dis ? 20 * 2
-				: 20));
+		txtAreaNameFiles.setFont(new Font("Tahoma", Font.PLAIN, dis ? 40 : 20));
 		txtAreaNameFiles.setEditable(false);
-		txtAreaNameFiles.setBounds(0, dis ? 165 * 2 : 165, dis ? 721 * 2 : 721,
-				dis ? 495 * 2 : 495);
+		txtAreaNameFiles.setBounds(0, dis ? 330 : 165, dis ? 330 : 721,
+				dis ? 990 : 495);
 		panel_1.add(txtAreaNameFiles);
 
 		Panel panel = new Panel();
-		panel.setBounds(0, 0, dis ? 721 * 2 : 721, dis ? 166 * 2 : 166);
+		panel.setBounds(0, 0, dis ? 330 : 721, dis ? 332 : 166);
 		panel_1.add(panel);
 		panel.setBackground(SystemColor.inactiveCaption);
 		panel.setLayout(null);
@@ -159,23 +155,22 @@ public class FrameReaderAction implements Serializable {
 		panel.add(btnSelectFolder);
 
 		JLabel lblSelectFolder = new JLabel("Select Folder");
-		lblSelectFolder.setBounds(5, dis ? 78 * 2 : 78, dis ? 137 * 2 : 137,
-				dis ? 14 * 2 : 14);
+		lblSelectFolder.setBounds(5, dis ? 156 : 78, dis ? 274 : 137, dis ? 28
+				: 14);
 		panel.add(lblSelectFolder);
-		lblSelectFolder.setFont(new Font("Trebuchet MS", Font.BOLD,
-				dis ? 20 * 2 : 20));
+		lblSelectFolder.setFont(new Font("Trebuchet MS", Font.BOLD, dis ? 40
+				: 20));
 
 		JLabel lblPath = new JLabel("Path:");
-		lblPath.setBounds(dis ? 150 * 2 : 150, 20, dis ? 90 * 2 : 90,
-				dis ? 24 * 2 : 24);
+		lblPath.setBounds(dis ? 300 : 150, 20, dis ? 180 : 90, dis ? 48 : 24);
 		panel.add(lblPath);
-		lblPath.setFont(new Font("Trebuchet MS", Font.BOLD, dis ? 20 * 2 : 20));
+		lblPath.setFont(new Font("Trebuchet MS", Font.BOLD, dis ? 40 : 20));
 
 		lblPathValue = new JLabel("");
 		lblPathValue.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC,
-				dis ? 20 * 2 : 20));
-		lblPathValue.setBounds(dis ? 150 * 2 : 150, 47, dis ? 529 * 2 : 529,
-				dis ? 28 * 2 : 28);
+				dis ? 40 : 20));
+		lblPathValue.setBounds(dis ? 300 : 150, 47, dis ? 1058 : 529, dis ? 56
+				: 28);
 		panel.add(lblPathValue);
 		lblPathValue.setBackground(Color.WHITE);
 
@@ -183,8 +178,8 @@ public class FrameReaderAction implements Serializable {
 		buttonRunSearchFile = new JButton("");
 		String pathRunIcon = dis ? "/Image/runIcon_128.png"
 				: "/Image/runIconX72.png";
-		setButtonOption(buttonRunSearchFile, pathRunIcon, true, dis ? 322 * 2
-				: 322, dis ? 86 * 2 : 86, 72, 72);
+		setButtonOption(buttonRunSearchFile, pathRunIcon, true,
+				dis ? 644 : 322, dis ? 172 : 86, 72, 72);
 		buttonRunSearchFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				readFilesPath();
@@ -195,8 +190,8 @@ public class FrameReaderAction implements Serializable {
 		// Create Button to clean the textArea in Search tab
 		JButton btnClearSearch = new JButton("");
 		String pathClear = dis ? "/Image/Clear_64.png" : "/Image/Clear_32.png";
-		setButtonOption(btnClearSearch, pathClear, false, 10, dis ? 126 * 2
-				: 126, 32, 32);
+		setButtonOption(btnClearSearch, pathClear, false, 10, dis ? 252 : 126,
+				32, 32);
 		btnClearSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				txtAreaNameFiles.setText("");
@@ -208,16 +203,15 @@ public class FrameReaderAction implements Serializable {
 		tabbedPane.addTab("Rename Files", null, panel_2, null);
 		JLabel lab2 = new JLabel();
 		lab2.setText("Rename Files");
-		lab2.setPreferredSize(new Dimension(dis ? 150 * 2 : 150, dis ? 40 * 2
-				: 40));
-		lab2.setFont(new Font("Trebuchet MS", Font.BOLD, dis ? 20 * 2 : 20));
+		lab2.setPreferredSize(new Dimension(dis ? 300 : 150, dis ? 80 : 40));
+		lab2.setFont(new Font("Trebuchet MS", Font.BOLD, dis ? 40 : 20));
 		tabbedPane.setTabComponentAt(1, lab2);
 		panel_2.setLayout(null);
 
 		Panel panel_3 = new Panel();
 		panel_3.setLayout(null);
 		panel_3.setBackground(SystemColor.inactiveCaption);
-		panel_3.setBounds(0, 0, dis ? 720 * 2 : 720, dis ? 246 * 2 : 246);
+		panel_3.setBounds(0, 0, dis ? 1440 : 720, dis ? 492 : 246);
 		panel_2.add(panel_3);
 
 		// Create Button to select folder to rename tab
@@ -234,30 +228,27 @@ public class FrameReaderAction implements Serializable {
 		panel_3.add(btnRename);
 
 		JLabel label = new JLabel("Select Folder");
-		label.setFont(new Font("Trebuchet MS", Font.BOLD, dis ? 20 * 2 : 20));
-		label.setBounds(5, dis ? 78 * 2 : 78, dis ? 131 * 2 : 131, dis ? 14 * 2
-				: 14);
+		label.setFont(new Font("Trebuchet MS", Font.BOLD, dis ? 40 : 20));
+		label.setBounds(5, dis ? 156 : 78, dis ? 262 : 131, dis ? 28 : 14);
 		panel_3.add(label);
 
 		JLabel label_1 = new JLabel("Path:");
-		label_1.setFont(new Font("Trebuchet MS", Font.BOLD, dis ? 20 * 2 : 20));
-		label_1.setBounds(dis ? 150 * 2 : 150, 20, dis ? 83 * 2 : 83,
-				dis ? 23 * 2 : 23);
+		label_1.setFont(new Font("Trebuchet MS", Font.BOLD, dis ? 40 : 20));
+		label_1.setBounds(dis ? 300 : 150, 20, dis ? 166 : 83, dis ? 46 : 23);
 		panel_3.add(label_1);
 
 		lblPathRename = new JLabel("");
 		lblPathRename.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC,
-				dis ? 20 * 2 : 20));
+				dis ? 40 : 20));
 		lblPathRename.setBackground(Color.WHITE);
-		lblPathRename.setBounds(dis ? 150 * 2 : 150, 45, dis ? 560 * 2 : 560,
-				dis ? 30 * 2 : 30);
+		lblPathRename.setBounds(dis ? 300 : 150, 45, dis ? 1120 : 560, dis ? 60
+				: 30);
 		panel_3.add(lblPathRename);
 
 		chckAuto = new JCheckBox("AutoIncrement With Name");
-		chckAuto.setFont(new Font("Tahoma", Font.PLAIN, dis ? 20 * 2 : 20));
+		chckAuto.setFont(new Font("Tahoma", Font.PLAIN, dis ? 40 : 20));
 		chckAuto.setBackground(SystemColor.inactiveCaption);
-		chckAuto.setBounds(15, dis ? 102 * 2 : 102, dis ? 267 * 2 : 267,
-				dis ? 23 * 2 : 23);
+		chckAuto.setBounds(15, dis ? 204 : 102, dis ? 534 : 267, dis ? 46 : 23);
 		chckAuto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				isIncrementWithoutName = false;
@@ -271,11 +262,11 @@ public class FrameReaderAction implements Serializable {
 		chckbxAutoincrementWithoutName = new JCheckBox(
 				"AutoIncrement Without Name");
 		chckbxAutoincrementWithoutName.setFont(new Font("Tahoma", Font.PLAIN,
-				dis ? 20 * 2 : 20));
+				dis ? 40 : 20));
 		chckbxAutoincrementWithoutName
 				.setBackground(SystemColor.inactiveCaption);
-		chckbxAutoincrementWithoutName.setBounds(dis ? 419 * 2 : 419,
-				dis ? 102 * 2 : 102, dis ? 291 * 2 : 291, dis ? 23 * 2 : 23);
+		chckbxAutoincrementWithoutName.setBounds(dis ? 838 : 419, dis ? 204
+				: 102, dis ? 582 : 291, dis ? 46 : 23);
 		chckbxAutoincrementWithoutName.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isIncrement = false;
@@ -288,21 +279,21 @@ public class FrameReaderAction implements Serializable {
 		panel_3.add(chckbxAutoincrementWithoutName);
 
 		textPrefix = new JTextField();
-		textPrefix.setFont(new Font("Tahoma", Font.PLAIN, dis ? 20 * 2 : 20));
-		textPrefix.setBounds(dis ? 94 * 2 : 94, dis ? 132 * 2 : 132,
-				dis ? 616 * 2 : 616, dis ? 31 * 2 : 31);
+		textPrefix.setFont(new Font("Tahoma", Font.PLAIN, dis ? 40 : 20));
+		textPrefix.setBounds(dis ? 188 : 94, dis ? 264 : 132, dis ? 1232 : 616,
+				dis ? 62 : 31);
 		panel_3.add(textPrefix);
 		textPrefix.setColumns(10);
 
 		JLabel lblNewLabel = new JLabel("Prefix :");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, dis ? 20 * 2 : 20));
-		lblNewLabel.setBounds(16, dis ? 135 * 2 : 135, dis ? 73 * 2 : 73,
-				dis ? 25 * 2 : 25);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, dis ? 40 : 20));
+		lblNewLabel.setBounds(16, dis ? 270 : 135, dis ? 146 : 73, dis ? 50
+				: 25);
 		panel_3.add(lblNewLabel);
 
 		buttonRunRenameFiles = new JButton("");
-		setButtonOption(buttonRunRenameFiles, pathRunIcon, true, dis ? 322 * 2
-				: 322, dis ? 170 * 2 : 170, 72, 72);
+		setButtonOption(buttonRunRenameFiles, pathRunIcon, true, dis ? 644
+				: 322, dis ? 340 : 170, 72, 72);
 		buttonRunRenameFiles.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				readFilesPath();
@@ -311,8 +302,8 @@ public class FrameReaderAction implements Serializable {
 		panel_3.add(buttonRunRenameFiles);
 
 		btnClearRaname = new JButton("");
-		setButtonOption(btnClearRaname, pathClear, false, 10, dis ? 205 * 2
-				: 205, 32, 32);
+		setButtonOption(btnClearRaname, pathClear, false, 10, dis ? 410 : 205,
+				32, 32);
 		btnClearRaname.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textAreaRenameFile.setText("");
@@ -321,26 +312,26 @@ public class FrameReaderAction implements Serializable {
 		panel_3.add(btnClearRaname);
 
 		lblStatus = new JLabel("");
-		lblStatus.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC,
-				dis ? 18 * 2 : 18));
-		lblStatus.setBounds(dis ? 210 * 2 : 210, dis ? 252 * 2 : 252,
-				dis ? 291 * 2 : 291, dis ? 22 * 2 : 22);
+		lblStatus.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, dis ? 36
+				: 18));
+		lblStatus.setBounds(dis ? 420 : 210, dis ? 504 : 252, dis ? 582 : 291,
+				dis ? 44 : 22);
 		panel_2.add(lblStatus);
 
 		progressBar = new JProgressBar();
-		progressBar.setBounds(10, dis ? 284 * 2 : 284, dis ? 701 * 2 : 701,
-				dis ? 32 * 2 : 32);
+		progressBar.setBounds(10, dis ? 568 : 284, dis ? 1402 : 701, dis ? 64
+				: 32);
 		progressBar.setValue(0);
 		progressBar.setMinimum(0);
 		progressBar.setStringPainted(true);
 		panel_2.add(progressBar);
 
 		textAreaRenameFile = new TextArea();
-		textAreaRenameFile.setFont(new Font("Tahoma", Font.PLAIN, dis ? 20 * 2
-				: 20));
+		textAreaRenameFile
+				.setFont(new Font("Tahoma", Font.PLAIN, dis ? 40 : 20));
 		textAreaRenameFile.setEditable(false);
-		textAreaRenameFile.setBounds(0, dis ? 322 * 2 : 322, dis ? 720 * 2
-				: 720, dis ? 338 * 2 : 338);
+		textAreaRenameFile.setBounds(0, dis ? 644 : 322, dis ? 1440 : 720,
+				dis ? 676 : 338);
 		panel_2.add(textAreaRenameFile);
 
 		frame.setIconImage(new ImageIcon(getClass().getResource(
