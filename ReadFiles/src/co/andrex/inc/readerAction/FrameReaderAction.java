@@ -93,7 +93,6 @@ public class FrameReaderAction implements Serializable {
 		// Detected the resolution of display
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		Double width = screenSize.getWidth();
-		Double height = screenSize.getHeight();
 		dis = false;
 		if (width > 2000) {
 			dis = true;
@@ -270,7 +269,7 @@ public class FrameReaderAction implements Serializable {
 				isIncrement = false;
 				isIncrementWithoutName = chckbxAutoincrementWithoutName
 						.isSelected();
-				textPrefix.setEnabled(!isIncrementWithoutName);
+				textPrefix.setEnabled(true);
 				chckAuto.setSelected(false);
 			}
 		});
@@ -437,7 +436,7 @@ public class FrameReaderAction implements Serializable {
 		if (isIncrement) {
 			value = name + "." + conn + "." + ext;
 		} else if (isIncrementWithoutName) {
-			value = conn + "." + ext;
+			value = textPrefix.getText() + conn + "." + ext;
 		} else {
 			String x = name;
 			String number = "";
