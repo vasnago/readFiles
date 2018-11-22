@@ -8,6 +8,7 @@ import java.awt.Panel;
 import java.awt.SystemColor;
 import java.awt.TextArea;
 import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -51,6 +52,7 @@ public class FrameReaderAction implements Serializable {
 	private JTextField textPrefix;
 	private JCheckBox chckAuto;
 	private JCheckBox chckbxAutoincrementWithoutName;
+	private JCheckBox chkErasePrefix;
 	private TextArea txtAreaNameFiles;
 	private TextArea textAreaRenameFile;
 	private JButton buttonRunSearchFile;
@@ -59,6 +61,7 @@ public class FrameReaderAction implements Serializable {
 	private boolean flagAction = false;
 	private boolean isIncrement;
 	private boolean isIncrementWithoutName;
+	private boolean isErasePrefix;
 	private int conn = 0;
 	private JButton btnClearRaname;
 	private boolean dis = false;
@@ -196,6 +199,19 @@ public class FrameReaderAction implements Serializable {
 		});
 		panel.add(btnClearSearch);
 
+		JButton btnCopy = new JButton("Copy");
+		btnCopy.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Toolkit.getDefaultToolkit()
+						.getSystemClipboard()
+						.setContents(
+								new StringSelection(txtAreaNameFiles.getText()),
+								null);
+			}
+		});
+		btnCopy.setBounds(648, 132, 63, 23);
+		panel.add(btnCopy);
+
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab("Rename Files", null, panel_2, null);
 		JLabel lab2 = new JLabel();
@@ -249,9 +265,11 @@ public class FrameReaderAction implements Serializable {
 		chckAuto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				isIncrementWithoutName = false;
+				isErasePrefix = false;
 				isIncrement = chckAuto.isSelected();
 				textPrefix.setEnabled(!isIncrement);
 				chckbxAutoincrementWithoutName.setSelected(false);
+				chkErasePrefix.setSelected(false);
 			}
 		});
 		panel_3.add(chckAuto);
@@ -267,10 +285,12 @@ public class FrameReaderAction implements Serializable {
 		chckbxAutoincrementWithoutName.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isIncrement = false;
+				isErasePrefix = false;
 				isIncrementWithoutName = chckbxAutoincrementWithoutName
 						.isSelected();
 				textPrefix.setEnabled(true);
 				chckAuto.setSelected(false);
+				chkErasePrefix.setSelected(false);
 			}
 		});
 		panel_3.add(chckbxAutoincrementWithoutName);
@@ -307,6 +327,22 @@ public class FrameReaderAction implements Serializable {
 			}
 		});
 		panel_3.add(btnClearRaname);
+
+		chkErasePrefix = new JCheckBox("Erase Prefix In the Name");
+		chkErasePrefix.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				isIncrement = false;
+				isIncrementWithoutName = false;
+				isErasePrefix = chkErasePrefix.isSelected();
+				textPrefix.setEnabled(true);
+				chckAuto.setSelected(false);
+				chckbxAutoincrementWithoutName.setSelected(false);
+			}
+		});
+		chkErasePrefix.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		chkErasePrefix.setBackground(SystemColor.inactiveCaption);
+		chkErasePrefix.setBounds(15, 179, 247, 23);
+		panel_3.add(chkErasePrefix);
 
 		lblStatus = new JLabel("");
 		lblStatus.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, dis ? 36
@@ -379,6 +415,7 @@ public class FrameReaderAction implements Serializable {
 	private void readFilesPath() {
 		File folder = new File(chooser.getSelectedFile().getPath());
 		File[] listOfFiles = folder.listFiles();
+
 		conn = 0;
 		int v = 0;
 		for (int i = 0; i < listOfFiles.length; i++) {
@@ -395,10 +432,24 @@ public class FrameReaderAction implements Serializable {
 					progressBar.setValue(percent);
 					cont++;
 				} else {
-					lblPathValue.setText(chooser.getSelectedFile().getPath());
 					String value = changeFileName(listOfFiles[i].getName());
-					txtAreaNameFiles.append(value + "\n");
+						txtAreaNameFiles.append(value + "\n");
 				}
+			} else if (!flagAction) {
+				if (listOfFiles[i].isDirectory()) {
+					File folderAux = new File(listOfFiles[i].getPath());
+					File[] filesAux = folderAux.listFiles();
+					String valueName = ">" + listOfFiles[i].getName();
+					for (int j = 0; j < filesAux.length; j++) {
+						if (filesAux[j].isFile()) {
+							String nameAux = changeFileName(filesAux[j]
+									.getName());
+							valueName += " - " + nameAux;
+						}
+					}
+					txtAreaNameFiles.append(valueName + "\n");
+				}
+
 			}
 		}
 		if (flagAction) {
@@ -414,7 +465,12 @@ public class FrameReaderAction implements Serializable {
 	 */
 	private void renameFile(File file) {
 		String path = chooser.getSelectedFile().getPath();
-		String name = changeName(file.getName());
+		String name = "";
+		if (isErasePrefix) {
+			name = erasePrefixNameFile(file.getName());
+		} else {
+			name = changeName(file.getName());
+		}
 		textAreaRenameFile.append(name + "\n");
 		File newfile = new File(path + "/" + name);
 		file.renameTo(newfile);
@@ -425,6 +481,7 @@ public class FrameReaderAction implements Serializable {
 	 * 
 	 * @param name
 	 *            : name of the file
+	 * @return String: value fixed of name
 	 */
 	private String changeName(String name) {
 		String value = "";
@@ -464,6 +521,18 @@ public class FrameReaderAction implements Serializable {
 	/**
 	 * This method allow replace and fix the name of the files
 	 * 
+	 * @param name
+	 *            : name of the file
+	 * @return String: value fixed of name
+	 */
+	private String erasePrefixNameFile(String name) {
+		name = name.replaceAll(textPrefix.getText(), "");
+		return name;
+	}
+
+	/**
+	 * This method allow replace and fix the name of the files
+	 * 
 	 * @param path
 	 *            : path directory of the file
 	 * @return String: value fixed of name of the
@@ -476,7 +545,7 @@ public class FrameReaderAction implements Serializable {
 		// 2. Then replace the dots (.) With spaces
 		value = value.replaceAll("\\.", " ");
 		value = value.replaceAll("_", " ");
-		value = value.replaceAll("-", " ");
+		// value = value.replaceAll("-", " ");
 
 		// 3. Then it is called the method that detects the capital letters and
 		// separates the name
@@ -543,5 +612,4 @@ public class FrameReaderAction implements Serializable {
 			}
 		}
 	}
-
 }
